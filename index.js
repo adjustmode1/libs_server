@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const multer = require('multer');
 const jwt = require('./utils/jwt');
 const cors = require('cors');
-const { login } = require('./controllers/login');
+const loginController = require('./controllers/login');
 
 require('dotenv').config()
 
@@ -24,7 +24,7 @@ app.get('/',(req,res)=>{
 })
 app.post('/login',(req,res)=>{
     console.log(req.body)
-    login(req.body.username,req.body.password)
+    loginController.login(req.body.username,req.body.password)
     res.send('fawef')
 })
 app.get('/login',(req,res)=>{

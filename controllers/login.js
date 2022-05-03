@@ -1,7 +1,11 @@
-const {findOne} = require('./../models/student');
+const studentModel = require('./../models/student');
 
-const login = (username,password)=>{
-    findOne(username);
+const login = async (username,password)=>{
+    let student = await studentModel.findOne(username);
+    console.log(student)
+    if(student){
+        console.log('có')
+    }
 }
 
 module.exports = {
