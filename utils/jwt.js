@@ -1,15 +1,24 @@
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 const key = process.env.KEY_JWT;
-
-const verify = (token)=>{
-    return jwt.verify(token,key)
+const exp = process.env.EXP_JWT;
+const checkToken = (token)=>{
+    return new Promise((resolve,reject)=>{
+        jwt.verify(token,key,(err,res)=>{
+            if(err){
+                reject(err)
+            }else{
+                resolve(res)
+            }
+        })
+    })
 }
-const sign = (data)=>{
-    return jwt.sign(data,key)
+const signToken = (data)=>{
+    let token = jwt.sign({data:data},key,{expiresIn:exp});
+    return token;
 }
 module.exports = {
-    verify,
-    sign
+    checkToken,
+    signToken
 }
