@@ -46,8 +46,15 @@ topicRouter.post('/create/file',upload_file.array('link_doc'),(req,res)=>{
 })
 
 topicRouter.post('/create/data',(req,res)=>{
-    // console.log('data',req.headers)
-    res.send('ok');
+    topicController.create_topic(req.body.id_subject,'',req.body.topic_title,req.body.topic_content)
+    .then(result=>{
+        console.log(res)
+        res.send('ok')
+    })
+    .catch(err=>{
+        console.log(err)
+        res.status(400).send('bad request')
+    })
 })
 
 topicRouter.get('/list',(req,res)=>{
@@ -60,6 +67,38 @@ topicRouter.get('/list',(req,res)=>{
         console.log(err)
         res.status(401).send('not found');
     })
+})
+topicRouter.get('/list/doc',(req,res)=>{
+    topicController.listDoc(req.query['id'])
+    .then(result=>{
+        console.log(res)
+        res.send(result)
+    })
+    .catch(err=>{
+        console.log(err)
+        res.status(401).send('not found');
+    })
+})
+
+topicRouter.post('/hidden',(req,res)=>{
+    topicController.changeStatusTopic(req.body.id_topic,req.body.status)
+    .then(res=>{    
+        res.send('ok')
+    })
+    .catch(err=>{
+        res.send(err)
+    })
+})
+
+topicRouter.post('/delete',(req,res)=>{
+    topicController.deleteTopic(req.body.id_topic)
+    .then(res=>{
+        console.log(res)
+    })
+    .catch(err=>{
+        console.log(err)
+    })
+    res.send('ok')
 })
 
 module.exports = topicRouter;

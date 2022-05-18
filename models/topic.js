@@ -11,6 +11,7 @@ const create = (topic)=>{
                 resolve(data)
             }
         })
+        resolve(true)
     })
 }
 
@@ -27,7 +28,50 @@ const list = (id) =>{
     })
 }
 
+const listDoc = (id)=>{
+    return new Promise((resolve,reject)=>{
+        let sql = `SELECT * FROM topic as tp, document as dc where tp.id_document = dc.id_doc and id_subject = '${id}' GROUP BY id_topic ;`;
+        conn.query(sql,(err,data)=>{
+            if(err){
+                reject(err)
+            }else{
+                resolve(data)
+            }
+        })
+    })
+}
+
+const changeStatusTopic = (id_topic,status)=>{
+    return new Promise((resolve,reject)=>{
+        let sql = `update topic set status = ${status} WHERE id_topic = '${id_topic}';`;
+        console.log('model',sql);
+        conn.query(sql,(err,data)=>{
+            if(err){
+                reject(err)
+            }else{
+                resolve(data)
+            }
+        })
+    })
+}
+
+const deleteTopic= (id_topic)=>{
+    return new Promise((resolve,reject)=>{
+        let sql = `delete from topic WHERE id_topic = '${id_topic}';`;
+        console.log('model',sql);
+        conn.query(sql,(err,data)=>{
+            if(err){
+                reject(err)
+            }else{
+                resolve(data)
+            }
+        })
+    })
+}
+
 module.exports = {
     create,
-    list
+    list,
+    listDoc,
+    deleteTopic
 }

@@ -25,6 +25,20 @@ const create_doctopic = (id_doc,id_type,auth,name,link)=>{
     })
 }
 
+const findOne = (id_doc)=>{
+    return new Promise((resolve,reject)=>{
+        documentModel.findOne(id_doc)
+        .then(res=>{
+            resolve(res)
+        })
+        .catch(err=>{   
+            console.log('con_er',err)
+            reject(err)
+        })
+    })
+}
+
 module.exports = {
-    create_doctopic
+    create_doctopic,
+    findOne
 }

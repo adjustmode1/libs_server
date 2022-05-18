@@ -54,10 +54,17 @@ app.post('/login',async (req,res)=>{
         res.status(204).send(token);
     })
 })
+app.get('/download_file',checkAuth,(req,res)=>{
+    if(req.query['path']!==''){
+        res.download(req.query['path'])
+    }else{
+        res.status(400).send('no file')
+    }
+})
 
 app.use('/info',checkAuth,infoRouter)
 app.use('/subject',checkAuth,subjectRouter);
-app.use('/topic',checkAuth,topicRouter)
+app.use('/topic',checkAuth,topicRouter);
 
 const port = process.env.PORT_SERVER||5000
 app.listen(port,()=>{
