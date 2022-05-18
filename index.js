@@ -12,6 +12,8 @@ const infoRouter = require('./routers/infoRouter');
 
 //controller
 const loginController = require('./controllers/login');
+const checkAuth = require('./middlewares/checklogin');
+const topicRouter = require('./routers/topicRouters');
 
 //lưu trữ file avatar sau khi client tải lên
 const store_image = multer.diskStorage({
@@ -53,9 +55,9 @@ app.post('/login',async (req,res)=>{
     })
 })
 
-app.use('/info',infoRouter)
-app.use('/subject',subjectRouter);
-
+app.use('/info',checkAuth,infoRouter)
+app.use('/subject',checkAuth,subjectRouter);
+app.use('/topic',checkAuth,topicRouter)
 
 const port = process.env.PORT_SERVER||5000
 app.listen(port,()=>{

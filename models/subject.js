@@ -19,7 +19,6 @@ const list = (query)=>{
         let max_size = query.max_size;
         let title_subject = query.title_subject;
         let name_lecture = query.name_lecture;
-
         let sql1 = `select 
                         sb.id_subject,
                         sb.title_subject,
@@ -37,7 +36,7 @@ const list = (query)=>{
                             sb.title_subject like '%${title_subject}%' and 
                             lt.name_lecture like '%${name_lecture}%'`;
         if(max_size){
-            sql1 = sql1 + `limit ${((index-1)*max_size)+1},${index*max_size}`
+            sql1 = sql1 + `limit ${((index-1)*max_size)},${(index*max_size)}`
         }
         conn.query(sql1,(err1,data1)=>{
             if(err1){
@@ -60,7 +59,21 @@ const list = (query)=>{
     })
 }
 
+const findOne = (id_subject)=>{
+    return new Promise((resolve,reject)=>{
+        let sql = `select * from subject where id_subject = '${id_subject}' limit 1`;
+        conn.query(sql,(err,data)=>{
+            if(err){
+                reject(err)
+            }else{
+                resolve(data)
+            }
+        })
+    })
+}
+
 module.exports = {
     subject_of_me,
-    list
+    list,
+    findOne
 }

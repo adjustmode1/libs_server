@@ -1,0 +1,60 @@
+subject
+	id_subject # string random
+	title_subject # tiêu đề của môn học
+	auth_subject # ai làm chủ môn học này (người có thể điều khiển bài viết)
+
+member   # sinh viên tự tham dự môn học
+	id_subject # thuộc môn học nào
+	id_student	# ai là thành viên
+
+topic # mỗi môn học gồm nhiều chủ đề trong đó
+	id_topic # random string
+	id_subject # thuộc chủ đề nào
+	id_document # có liên kết tài liệu không
+	title_topic # tiêu đề của bài viết
+	status # hiển thị hay ẩn
+	content_topic # nội dung mô tả bài viết
+
+document # tài liệu
+	id_doc # string random
+	id_type # int cá nhân, môn học
+	id_fields # IA, PTTKTT, ... 
+	auth_doc # ai sở hữu
+	status # hiển thị hay ẩn default true
+	create_at # ngày đăng
+	link_doc # nơi lưu file
+
+type_document # loại tài liệu
+	id_type # cá nhân, môn học
+	name_type # string
+	
+field # lĩnh vực của tài liệu
+	id_fields # int AI
+	name_fields # string
+	
+lectures # giản viên
+	id_lecture
+	password_lecture
+	name_lecture
+	gender_lecture
+	gmail_lecture
+	phone_number_lecture
+	birthday_lecture
+	avatar_lecture
+	rule_lecture # rule 0 là giáo viên rule 1 là giáo viên với quyền admin
+
+student
+	id_student
+	password_student
+	name_student
+	gender_student
+	address_student
+	gmail_student
+	phone_number_student
+	birthday_student
+	coure_student
+	avatar_student
+
+
+=========================================
+	

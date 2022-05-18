@@ -23,8 +23,19 @@ const list = (query)=>{
         if(!query.title_subject){
             query.title_subject = '';
         }
-        console.log(query)
         subjectModel.list(query)
+        .then(res=>{
+            resolve(res)
+        })
+        .catch(err=>{
+            reject(err)
+        })
+    })
+}
+
+const findOne = (id_subject)=>{
+    return new Promise((resolve,reject)=>{
+        subjectModel.findOne(id_subject)
         .then(res=>{
             resolve(res)
         })
@@ -36,5 +47,6 @@ const list = (query)=>{
 
 module.exports = {
     subject_of_me,
-    list
+    list,
+    findOne
 }

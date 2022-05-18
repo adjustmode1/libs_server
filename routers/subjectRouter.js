@@ -14,7 +14,7 @@ subjectRouter.get('/subject_of_me',checkAuth, async(req,res)=>{
     })
 })
 
-subjectRouter.get('/list', async(req,res)=>{
+subjectRouter.get('/list',checkAuth,async(req,res)=>{
     //max_size
 
     //title_subject
@@ -24,22 +24,33 @@ subjectRouter.get('/list', async(req,res)=>{
         index:req.query['index'],
         max_size:req.query['max_size'],
         title_subject:req.query['title_subject'],
-        name_subject:req.query['name_subject']
+        name_lecture:req.query['name_lecture']
     }
-    console.log(query)
     // {
     //     max_size,
     //     query
     // }
-    subjectController.list({
-        max_size:query.max_size
-    })
+    subjectController.list(query)
     .then(result=>{
         res.status(200).send(result)
     })
     .catch(err=>{
         res.status(200).send('');
     })
+})
+
+subjectRouter.get('/findOne',checkAuth,async(req,res)=>{
+    if(req.query['id_subject']!==''){
+        subjectController.findOne(req.query['id_subject'])
+        .then(result=>{
+            res.status(200).send(result)
+        })
+        .catch(err=>{
+            res.status(400).send(err);
+        })
+    }else{
+        res.status(400).send('bad request')
+    }
 })
 // ,checkAuth
 module.exports = subjectRouter;

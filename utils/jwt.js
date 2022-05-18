@@ -7,6 +7,7 @@ const checkToken = (token)=>{
     return new Promise((resolve,reject)=>{
         jwt.verify(token,key,(err,res)=>{
             if(err){
+                console.log(err)
                 reject(err)
             }else{
                 resolve(res)

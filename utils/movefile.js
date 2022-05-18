@@ -8,6 +8,7 @@ const moveFile = (oldPath,newPath,callback)=>{
             } else {
                 callback(err);
             }
+            console.log('err',err)
             return;
         }
         callback();

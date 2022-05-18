@@ -1,0 +1,42 @@
+=====================themes================
+trang giao diện tài liệu cá nhân:(sinh viên hay giản viên)
+	+ xóa tài liệu đã lưu 
+	+ đăng tài liệu lên cá nhân
+	+ cập nhật tài liệu đăng lên
+	+ tìm kiếm tài liệu 
+
+trang info:( sinh viên hay giản viên)
+	+ xem sửa xóa thông tin cá nhân
+
+trang subject: 
+	+ chế độ xem, sửa lớp
+		+ thêm, sửa xóa topic
+	+ tìm kiếm topic
+	+ tìm kiếm tài liệu
+
+=============================client==============================
+đăng xuất:
+	client: xóa cookies(token_libs) thiết lập các localstorage(nav,islogin,...)
+
+render subject index:
+	recieve: {subject} => render view
+
+authorization: vô hạn
+	dispath(unauth()): khi token expried // cần state gobal
+
+changeinfo(student,lecture):
+	+ cho thay đổi name, gender, phone_number, birthday, avatar
+
+==============================server===============================
+
+
+reder subject index: 
+	return: {subjects}
+
+
+========================step by step============================
+
+khi đăng nhập vào server chứng thực và chuyển cho client token giữ và info cho client render ở layout
+
+trang giao diện đầu tiên client sẽ request tìm 5 subject đầu để render ra
+trong trang giao diện đầu tiên có ô input phục vụ chức năng tìm kiếm dùng để request subject like "string"
