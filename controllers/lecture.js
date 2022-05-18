@@ -1,8 +1,8 @@
-const studentModel = require('../models/student');
+const lectureModel = require('../models/lecture');
 
 const changeInfo = (newstudent)=>{
     return new Promise((resolve,reject)=>{
-        studentModel.changeInfo({
+        lectureModel.changeInfo({
             gender:newstudent.gender,
             address:newstudent.address,
             gmail:newstudent.gmail,
@@ -24,7 +24,7 @@ const changepass = (id,newpass)=>{
     return new Promise((resolve,reject)=>{
         lectureModel.changepass(id,newpass)
         .then(result=>{
-            resolve(result)
+           resolve(result)
         })
         .catch(err=>{
             console.log(err)
@@ -32,9 +32,10 @@ const changepass = (id,newpass)=>{
         })
     })
 }
+
 const findOne = (id)=>{
     return new Promise((resolve,reject)=>{
-        studentModel.findOne(id)
+        lectureModel.findOne(id)
         .then(result=>{
            resolve(result)
         })
