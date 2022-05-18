@@ -14,7 +14,9 @@ const infoRouter = require('./routers/infoRouter');
 const loginController = require('./controllers/login');
 const checkAuth = require('./middlewares/checklogin');
 const topicRouter = require('./routers/topicRouters');
-
+const lectureController = require('./controllers/lecture')
+const studentController = require('./controllers/student')
+const hashing = require('./utils/hasing');
 //lưu trữ file avatar sau khi client tải lên
 const store_image = multer.diskStorage({
     destination:(req,file,cb)=>{
@@ -60,6 +62,40 @@ app.get('/download_file',checkAuth,(req,res)=>{
     }else{
         res.status(400).send('no file')
     }
+})
+
+app.post('/changepassword_lecture',checkAuth,(req,res)=>{
+    // lectureController.changepass(req.info.id,req.info.password)
+    lectureController.findOne(req.info.id)
+    .then(result=>{
+        console.log('pass',req.body.password)
+        console.log('lec',result[0].password_lecture)
+        hashing.compare(req.body.password,result[0].password_lecture)
+        .then(result1=>{
+            hashing.hash(req.body.password)
+            .then(result2=>{
+                console.log('hash',result2)
+                lectureController.changepass(req.info.id,result2)
+                res.send('ok')
+            })
+            .catch(err=>{
+                console.log('has',err)
+                res.status(500).send(err)
+            })
+        })
+        .catch(err=>{
+            console.log(err)
+            res.status(204).send('sai password')
+        })
+    })
+    .catch(err=>{
+        console.log(err)
+        res.status(500).send('server error')
+    })
+})
+
+app.post('/changepassword_student',checkAuth,(req,res)=>{
+
 })
 
 app.use('/info',checkAuth,infoRouter)
