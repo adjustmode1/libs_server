@@ -76,6 +76,49 @@ const login = async(username,password)=>{
     })
 }
 
+const loginadmin = async (username,password) =>{
+    return new Promise((resolve,reject)=>{
+        lectureModel.findOne(username)
+            .then(res=>{
+                lecture = res;
+                if(lecture.length){
+                    hash.compare(password,lecture[0].password_lecture)
+                    .then(res=>{
+                        if(res){
+                            let result = {
+                                id:lecture[0].id_lecture,
+                                name:lecture[0].name_lecture,
+                                gender:lecture[0].gender_lecture,
+                                gmail:lecture[0].gmail_lecture,
+                                phone_number:lecture[0].phone_number_lecture,
+                                avatar:lecture[0].avatar_lecture,
+                                birthday:lecture[0].birthday_lecture,
+                                address:lecture[0].address_lecture,
+                                rule:lecture[0].rule_lecture
+                            }
+                            let token = jwt.signToken(result);
+                            resolve({
+                                token,
+                                data:result
+                            })
+                        }else{
+                            reject('')
+                        }
+                    }) 
+                    .catch(err=>{
+                        reject('')
+                    })
+                }else{
+                    reject('')
+                }
+            })
+            .catch(err=>{
+                console.log(err)
+            })
+    })
+}
+
 module.exports = {
-    login
+    login,
+    loginadmin
 };

@@ -13,10 +13,11 @@ const infoRouter = require('./routers/infoRouter');
 //controller
 const loginController = require('./controllers/login');
 const checkAuth = require('./middlewares/checklogin');
+const checkAuthAdmin = require('./middlewares/checkloginadmin');
 const topicRouter = require('./routers/topicRouters');
 const lectureController = require('./controllers/lecture')
-const studentController = require('./controllers/student')
 const hashing = require('./utils/hasing');
+const studentRoute = require('./routers/student');
 //lưu trữ file avatar sau khi client tải lên
 const store_image = multer.diskStorage({
     destination:(req,file,cb)=>{
@@ -40,7 +41,6 @@ app.use(cors({origin: true, credentials: true}))
 
 // cho truy xuất tới folder img
 app.use(express.static('img'))
-
 app.get('/',(req,res)=>{
     res.send('server API NODEJS for LIBS')
 })
@@ -101,6 +101,21 @@ app.post('/changepassword_student',checkAuth,(req,res)=>{
 app.use('/info',checkAuth,infoRouter)
 app.use('/subject',checkAuth,subjectRouter);
 app.use('/topic',checkAuth,topicRouter);
+
+//==================================================adim=============================================//
+app.post('/loginadmin',async (req,res)=>{
+    let token =  '';
+    loginController.loginadmin(req.body.username,req.body.password)
+    .then(result=>{
+        res.status(200).send(result);
+    })
+    .catch(err=>{
+        console.log(err)
+        res.status(204).send(token);
+    })
+})
+
+app.use('/student',checkAuthAdmin,studentRoute)
 
 const port = process.env.PORT_SERVER||5000
 app.listen(port,()=>{

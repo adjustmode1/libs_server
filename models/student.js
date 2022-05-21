@@ -1,5 +1,6 @@
 const conn = require('./../utils/connect')
 
+
 const findOne =(username)=>{
     return new Promise((resolve,reject)=>{
         let sql = `select * from student where id_student='${username}' limit 1`;
@@ -59,10 +60,71 @@ const changepass = (id,password)=>{
         })
     })
 }
+const showStudent = ()=>{
+    return new Promise((resolve,reject)=>{
+        let sql = `select * from student`;
+        conn.query(sql,(err,data)=>{
+            if(err){
+                reject(err)
+            }else{
+                resolve(data)
+            }
+        })
+    })
+}
+const addStudent = (id,pass,name,gender,address,gmail,phone,birthday,coure)=>{
+    return new Promise((resolve,reject)=>{
+        let sql = `insert into student(id_student,password_student,name_student,gender_student,address_student,gmail_student,phone_number_student,birthday_student,coure_student) 
+                        values('${id}','${pass}','${name}',${gender},'${address}','${gmail}','${phone}','${birthday}','${coure}')`;
+        conn.query(sql,(err,data)=>{
+            if(err){
+
+                reject(err)
+            }else{
+                resolve(data)
+            }
+        })
+    })
+}
+
+const deleteStudent = (id)=>{
+    return new Promise((resolve,reject)=>{
+        let sql = `delete from student where id_student = '${id}'`;
+        console.log('sql',sql)
+        conn.query(sql,(err,data)=>{
+            if(err){
+                reject(err)
+            }else{
+                resolve(data)
+            }
+        })
+    })
+}
+
+const updateStudent = (idold,id,name,gender,address,gmail,phone,birthday,coure)=>{
+    return new Promise((resolve,reject)=>{
+        let sql = `update student set id_student='${id}', name_student = '${name}', gender_student='${gender}',address_student='${address}',gmail_student='${gmail}',phone_number_student='${phone}',birthday_student='${birthday}',coure_student='${coure}' where id_student = '${idold}'`;
+        console.log('sql',sql)
+        conn.query(sql,(err,data)=>{
+            if(err){
+                console.log(err)
+                reject(err)
+            }else{
+                resolve(data)
+            }
+        })
+        resolve('ok')
+    })
+}
+
 
 module.exports = {
     findOne,
     changeInfo,
     updateAvatar,
-    changepass
+    changepass,
+    addStudent,
+    deleteStudent,
+    showStudent,
+    updateStudent
 }
